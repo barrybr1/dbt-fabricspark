@@ -238,6 +238,8 @@ class FabricSparkConnectionManager(SQLConnectionManager):
         """
         if isinstance(type_code, str):
             return type_code
+        if isinstance(type_code, dict):
+            return type_code['type']
         return type_code.__name__.upper()
 
     @classmethod
