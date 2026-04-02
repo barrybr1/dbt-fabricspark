@@ -143,7 +143,7 @@ W
   {% call statement('list_properties', fetch_result=True) -%}
     SHOW TBLPROPERTIES {{ relation }}
   {% endcall %}
-  {% do return(load_result('list_properties').table) %}
+  {{ return(load_result('list_properties').table) }}
 {%- endmacro %}
 
 {% macro persist_constraints(relation, model) %}
@@ -158,7 +158,7 @@ W
   {%- set contract_config = config.get('contract') -%}
   {% if contract_config.enforced and config.get('file_format', 'delta') == 'delta' %}
     {# {% do alter_column_set_constraints(relation, model.columns) %} #}
-    {% do alter_table_add_constraints(relation, model.constraints) %}
+    {% set _ = alter_table_add_constraints(relation, model.constraints) %}
   {% endif %}
 {% endmacro %}
 
